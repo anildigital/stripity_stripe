@@ -4,6 +4,36 @@ defmodule Stripe.Dispute do
   """
   use Stripe.Entity
 
+  @type dispute_evidence :: %{
+                              access_activity_log: String.t,
+                              billing_address: String.t,
+                              cancellation_policy: Stripe.id | Stripe.FileUpload.t,
+                              cancellation_policy_disclosure: String.t,
+                              cancellation_rebuttal: String.t,
+                              customer_communication: Stripe.id | Stripe.FileUpload.t,
+                              customer_email_address: String.t,
+                              customer_name: String.t,
+                              customer_purchase_ip: String.t,
+                              customer_signature: Stripe.id | Stripe.FileUpload.t,
+                              duplicate_charge_documentation: Stripe.id | Stripe.FileUpload.t,
+                              duplicate_charge_explanation: String.t,
+                              duplicate_charge_id: Stripe.id,
+                              product_description: String.t,
+                              receipt: Stripe.id | Stripe.FileUpload.t,
+                              refund_policy: Stripe.id | Stripe.FileUpload.t,
+                              refund_policy_disclosure: String.t,
+                              refund_refusal_explanation: String.t,
+                              service_date: String.t,
+                              service_documentation: Stripe.id | Stripe.FileUpload.t,
+                              shipping_address: String.t,
+                              shipping_carrier: String.t,
+                              shipping_date: String.t,
+                              shipping_documentation: Stripe.id | Stripe.FileUpload.t,
+                              shipping_tracking_number: Stripe.id | Stripe.FileUpload.t,
+                              uncategorized_file: Stripe.id | Stripe.FileUpload.t,
+                              uncategorized_text: String.t
+                            }
+
   @type evidence_details :: %{
                               due_by: Stripe.timestamp,
                               has_evidence: boolean,
@@ -27,7 +57,7 @@ defmodule Stripe.Dispute do
                charge: Stripe.id | Stripe.Charge.t,
                created: Stripe.timestamp,
                currency: String.t,
-               evidence: Stripe.DisputeEvidence.t,
+               evidence: dispute_evidence,
                evidence_details: evidence_details,
                is_charge_refundable: boolean,
                livemode: boolean,
