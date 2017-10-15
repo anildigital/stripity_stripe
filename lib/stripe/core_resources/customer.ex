@@ -13,79 +13,65 @@ defmodule Stripe.Customer do
 
   Stripe API reference: https://stripe.com/docs/api#customer
 
-  Example:
-
-  ```
-  {
-    "id": "cus_A5IzRTlo2DcV1J",
-    "object": "customer",
-    "account_balance": 0,
-    "created": 1486610024,
-    "currency": "usd",
-    "default_source": "card_19l8NQ2eZvKYlo2CiYWILX4R",
-    "delinquent": false,
-    "description": "Sample user",
-    "discount": null,
-    "email": "jaylen@example.com",
-    "livemode": false,
-    "metadata": {
-    },
-    "shipping": null,
-    "sources": {
-      "object": "list",
-      "data": [
-        {
-          "id": "card_19l8NQ2eZvKYlo2CiYWILX4R",
-          "object": "card",
-          "address_city": null,
-          "address_country": null,
-          "address_line1": null,
-          "address_line1_check": null,
-          "address_line2": null,
-          "address_state": null,
-          "address_zip": null,
-          "address_zip_check": null,
-          "brand": "Visa",
-          "country": "US",
-          "customer": "cus_A5IzRTlo2DcV1J",
-          "cvc_check": "pass",
-          "dynamic_last4": null,
-          "exp_month": 2,
-          "exp_year": 2018,
-          "funding": "credit",
-          "last4": "1881",
-          "metadata": {
-          },
-          "name": null,
-          "tokenization_method": null
-        }
-      ],
-      "has_more": false,
-      "total_count": 1,
-      "url": "/v1/customers/cus_A5IzRTlo2DcV1J/sources"
-    },
-    "subscriptions": {
-      "object": "list",
-      "data": [
-
-      ],
-      "has_more": false,
-      "total_count": 0,
-      "url": "/v1/customers/cus_A5IzRTlo2DcV1J/subscriptions"
-    }
-  }
-  ```
   """
-
+  use Stripe.Entity
   alias Stripe.Util
 
-  @type t :: %__MODULE__{}
+  @type address :: %{
+                     city: String.t,
+                     country: String.t,
+                     line1: String.t,
+                     line2: String.t,
+                     postal_code: String.t,
+                     state: String.t
+                   }
+
+  @type shipping :: %{
+                      address: address,
+                      carrier: String.t,
+                      name: String.t,
+                      phone: String.t,
+                      tracking_number: String.t
+                    }
+
+  @type t :: %__MODULE__{
+               id: Stripe.id,
+               object: String.t,
+               account_balance: integer,
+               business_vat_id: String.t,
+               created: Stripe.timestamp,
+               currency: String.t,
+               default_source: Stripe.id | Stripe.Source.t,
+               delinquent: boolean,
+               description: String.t,
+               discount: Stripe.Discount.t | nil,
+               email: String.t,
+               livemode: boolean,
+               metadata: %{
+                 optional(String.t) => String.t
+               },
+               shipping: shipping,
+               sources: Stripe.List.of(Stripe.Source.t),
+               subscriptions: Stripe.List.of(Stripe.Subscription.t)
+             }
 
   defstruct [
-    :id, :object,
-    :account_balance, :business_vat_id, :created, :currency,
-    :default_source, :delinquent, :description, :discount, :email,
-    :livemode, :metadata, :shipping, :sources, :subscriptions
+    :id,
+    :object,
+    :account_balance,
+    :business_vat_id,
+    :created,
+    :currency,
+    :default_source,
+    :delinquent,
+    :description,
+    :discount,
+    :email,
+    :livemode,
+    :metadata,
+    :shipping,
+    :sources,
+    :subscriptions
   ]
 
   @plural_endpoint "customers"

@@ -32,23 +32,6 @@ defmodule Stripe.Charge do
                      type: :authorized | :manual_review | :issuer_declined | :blocked | :invalid
                    }
 
-  @type address :: %{
-                     city: String.t,
-                     country: String.t,
-                     line1: String.t,
-                     line2: String.t,
-                     postal_code: String.t,
-                     state: String.t
-                   }
-
-  @type shipping :: %{
-                      address: address,
-                      carrier: String.t,
-                      name: String.t,
-                      phone: String.t,
-                      tracking_number: String.t
-                    }
-
   @type card_info :: %{
                        exp_month: number,
                        exp_year: number,
@@ -237,7 +220,7 @@ defmodule Stripe.Charge do
                on_behalf_of: Stripe.id | Stripe.Account.t,
                metadata: map,
                receipt_email: String.t,
-               shipping: shipping,
+               shipping: Stripe.Customer.shipping,
                customer: Stripe.id | Stripe.Customer.t,
                source: Stripe.id | Stripe.Card.t | card_info,
                statement_descriptor: String.t
@@ -292,7 +275,7 @@ defmodule Stripe.Charge do
                  optional(atom) => String.t
                },
                receipt_email: String.t,
-               shipping: shipping,
+               shipping: Stripe.Customer.shipping,
                transfer_group: String.t
              }
   def update(id, params, opts \\ []) do
