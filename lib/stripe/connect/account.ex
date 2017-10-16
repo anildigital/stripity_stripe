@@ -149,7 +149,7 @@ defmodule Stripe.Account do
     :charges_enabled,
     :country,
     :debit_negative_balances,
-    :decline_charges_on,
+    :decline_charge_on,
     :default_currency,
     :details_submitted,
     :display_name,

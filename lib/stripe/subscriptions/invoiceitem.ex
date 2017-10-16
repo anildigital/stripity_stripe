@@ -41,6 +41,7 @@ defmodule Stripe.Invoiceitem do
     :date,
     :description,
     :discountable,
+    :invoice,
     :livemode,
     :metadata,
     :period,

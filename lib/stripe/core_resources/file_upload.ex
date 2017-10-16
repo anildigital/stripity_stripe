@@ -27,7 +27,8 @@ defmodule Stripe.FileUpload do
     :created,
     :purpose,
     :size,
-    :type
+    :type,
+    :url
   ]
 
   @plural_endpoint "files"

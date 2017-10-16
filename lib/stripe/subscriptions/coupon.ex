@@ -24,7 +24,7 @@ defmodule Stripe.Coupon do
                duration: :forever | :once | :repeating,
                duration_in_months: pos_integer | nil,
                livemode: boolean,
-               max_redeption: pos_integer,
+               max_redemptions: pos_integer,
                metadata: %{
                  optional(String.t) => String.t
                },

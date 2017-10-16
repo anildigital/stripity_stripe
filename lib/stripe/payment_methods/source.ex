@@ -21,7 +21,7 @@ defmodule Stripe.Source do
                object: String.t,
                amount: integer,
                client_secret: String.t,
-               code_verficiation: %{
+               code_verification: %{
                  attempts_remaining: integer,
                  status: :pending | :succeeded | :failed
                },

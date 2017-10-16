@@ -22,6 +22,8 @@ defmodule Stripe.ExternalAccount do
     "accounts/#{managed_account_id}/external_accounts"
   end
 
+  @type t :: Stripe.BankAccount.t | Stripe.Card.t
+
   @doc """
   Create an external account.
   """
