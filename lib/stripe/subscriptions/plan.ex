@@ -33,15 +33,39 @@ defmodule Stripe.Plan do
   }
   ```
   """
-
+  use Stripe.Entity
   alias Stripe.Util
 
-  @type t :: %__MODULE__{}
+  @type t :: %__MODULE__{
+               id: Stripe.id,
+               object: String.t,
+               amount: non_neg_integer,
+               created: Stripe.timestamp,
+               currency: String.t,
+               interval: :day | :week | :month | :year,
+               interval_count: pos_integer,
+               livemode: boolean,
+               metadata: %{
+                 optional(String.t) => String.t
+               },
+               name: String.t,
+               statement_descriptor: String.t,
+               trial_period_days: integer
+             }
 
   defstruct [
-    :id, :object,
-    :amount, :created, :currency, :interval, :interval_count,
-    :livemode, :metadata, :name, :statement_descriptor, :trial_period_days
+    :id,
+    :object,
+    :amount,
+    :created,
+    :currency,
+    :interval,
+    :interval_count,
+    :livemode,
+    :metadata,
+    :name,
+    :statement_descriptor,
+    :trial_period_days
   ]
 
   @plural_endpoint "plans"
