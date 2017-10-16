@@ -12,14 +12,43 @@ defmodule Stripe.Coupon do
 
   Stripe API reference: https://stripe.com/docs/api#coupons
   """
-
+  use Stripe.Entity
   alias Stripe.Util
 
-  @type t :: %__MODULE__{}
+  @type t :: %__MODULE__{
+               id: Stripe.id,
+               object: String.t,
+               amount_off: pos_integer,
+               created: Stripe.timestamp,
+               currency: String.t,
+               duration: :forever | :once | :repeating,
+               duration_in_months: pos_integer | nil,
+               livemode: boolean,
+               max_redeption: pos_integer,
+               metadata: %{
+                 optional(String.t) => String.t
+               },
+               percent_off: pos_integer,
+               redeem_by: Stripe.timestamp,
+               times_redeemed: non_neg_integer,
+               valid: boolean
+             }
 
   defstruct [
-    :id, :object, :amount_off, :created, :currency, :duration, :duration_in_months,
-    :livemode, :max_redemptions, :metadata, :percent_off, :redeem_by, :times_redeemed, :valid
+    :id,
+    :object,
+    :amount_off,
+    :created,
+    :currency,
+    :duration,
+    :duration_in_months,
+    :livemode,
+    :max_redemptions,
+    :metadata,
+    :percent_off,
+    :redeem_by,
+    :times_redeemed,
+    :valid
   ]
 
   @plural_endpoint "coupons"
