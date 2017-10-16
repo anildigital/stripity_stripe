@@ -82,17 +82,57 @@ defmodule Stripe.Subscription do
   }
   ```
   """
-
+  use Stripe.Entity
   alias Stripe.Util
 
-  @type t :: %__MODULE__{}
+  @type t :: %__MODULE__{
+               id: Stripe.id,
+               object: String.t,
+               application_fee_percent: float | nil,
+               cancel_at_period_end: boolean,
+               canceled_at: Stripe.timestamp | nil,
+               created: Stripe.timestamp,
+               current_period_end: Stripe.timestamp,
+               current_period_start: Stripe.timestamp,
+               customer: Stripe.id | Stripe.Customer.t,
+               discount: Stripe.Discount.t,
+               ended_at: Stripe.timestamp | nil,
+               items: Stripe.List.of(Stripe.SubscriptionItem.t),
+               livemode: boolean,
+               metadata: %{
+                 optional(String.t) => String.t
+               },
+               plan: Stripe.Plan.t,
+               quantity: integer,
+               start: Stripe.timestamp,
+               status: :trialing | :active | :past_due | :canceled | :unpaid,
+               tax_percent: float | nil,
+               trial_end: Stripe.timestamp,
+               trial_start: Stripe.timestamp
+             }
 
   defstruct [
-    :id, :object,
-    :application_fee_percent, :cancel_at_period_end, :canceled_at,
-    :created, :current_period_end, :current_period_start, :customer, :discount,
-    :ended_at, :items, :livemode, :metadata, :plan, :quantity, :source,
-    :start, :status, :tax_percent, :trial_end, :trial_start
+    :id,
+    :object,
+    :application_fee_percent,
+    :cancel_at_period_end,
+    :canceled_at,
+    :created,
+    :current_period_end,
+    :current_period_start,
+    :customer,
+    :discount,
+    :ended_at,
+    :items,
+    :livemode,
+    :metadata,
+    :plan,
+    :quantity,
+    :start,
+    :status,
+    :tax_percent,
+    :trial_end,
+    :trial_start
   ]
 
   @plural_endpoint "subscriptions"
@@ -156,7 +196,7 @@ defmodule Stripe.Subscription do
     endpoint = @plural_endpoint <> "/#{id}/discount"
 
     with {:ok, _} <- Stripe.Request.delete(endpoint, %{}, opts)
-    do
+      do
       {:ok, %{subscription | discount: nil}}
     end
   end
